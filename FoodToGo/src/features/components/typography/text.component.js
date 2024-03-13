@@ -43,7 +43,7 @@ ${(props) =>variants[props.variant](props.theme)}
 
 `
 function CustomText(props){
-    const {variant  = "caption",children} = props;
-    return <TextComponent variant = {variant}>{children}</TextComponent>
+    const {variant  = "caption",children, style} = props;
+    return <TextComponent variant = {variant} style={style}>{children}</TextComponent>
 }
 export default CustomText;

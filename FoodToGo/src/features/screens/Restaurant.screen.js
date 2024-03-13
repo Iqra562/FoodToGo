@@ -1,4 +1,5 @@
 import React, { useContext }  from "react";
+
 import UserSearch from '../components/UserSearch.components'
 import CustomRestaurantCard from "../components/RestaurantCard/CustomRestaurantCard";
 import { ScrollView, View,FlatList,ActivityIndicator } from "react-native";
@@ -21,8 +22,8 @@ const Loading = styled(ActivityIndicator)``;
 function RestaurantScreen (){
   const totalRestaurant = Array.from({length:5})
    const {isLoading,restaurants} = useContext(RestaurantsContext);
-   console.log(restaurants)
-  
+  //  restaurants.forEach(single => console.log(single?.address ,"correct"));
+  //  console.log(restaurants.address,"ressdfhdfdjkhfkjdhkj")
   return<>
     <UserSearch/>
  {isLoading && <Loading/>}
@@ -41,12 +42,12 @@ function RestaurantScreen (){
   data={restaurants}
   renderItem={ 
     (singleRestaurant)=>(
-      <CustomRestaurantCard  restaurant={singleRestaurant}/>
+      // console.log(singleRestaurant.item,"items"),
+      <CustomRestaurantCard  restaurant={singleRestaurant?.item}/>
     )
   }
-  // keyExtractor={(singleRestaurant) => singleRestaurant.name}
+  keyExtractor={(singleRestaurant) => singleRestaurant?.item?.name}
 
-  keyExtractor={(singleRestaurant,index) => index}
   />
   </RestaurantListContainer>}
 </>

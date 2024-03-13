@@ -17,12 +17,13 @@ const getRestaurants = ()=>{
     setIsLoading(true);
     setTimeout(()=>{
 RestaurantRequest().then((result)=>{
-    console.log(result,"result");
+    // console.log(result,"result");
     setRestaurants(result);
     setIsLoading(false);
 }).catch((error)=>{
 setError(error);
 setIsLoading(false);
+console.log(error)
 });
     },2000);
 }

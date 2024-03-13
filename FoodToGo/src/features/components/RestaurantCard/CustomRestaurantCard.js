@@ -15,15 +15,14 @@ const RestaurantCardCover = styled(Card.Cover)`
 margin-bottom : 10px;
 padding:12px;
 `
-const Title = styled(CustomText)`
-font-family:${(props) => props.theme.fonts.body };
-font-size:${(props) => props.theme.fontSizes.body };
-padding-top:${(props)=> props.theme.space[3]};
-padding-left:${(props)=> props.theme.space[3]};
-padding-right:${(props)=> props.theme.space[3]};
-padding-bottom:${(props)=> props.theme.space[1]};
-color:${(props) => props.theme.colors.ui.primary}
-`
+const Title = styled(CustomText)``
+// font-family:${(props) => props.theme.fonts.body };
+// font-size:${(props) => props.theme.fontSizes.body };
+// padding-top:${(props)=> props.theme.space[3]};
+// padding-left:${(props)=> props.theme.space[3]};
+// padding-right:${(props)=> props.theme.space[3]};
+// padding-bottom:${(props)=> props.theme.space[1]};
+// color:${(props) => props.theme.colors.ui.primary}
 const CardInnerSection = styled(View)`
   display: flex;
   flex-direction: row;
@@ -56,29 +55,42 @@ const CardSection = styled(View)`
 function CustomRestaurantCard(props){
     const {restaurant ={}} = props;
     const {
-    photos = "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
-    rating=Array.from({length:5}),
+    photos =[ "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg"],
+    rating=1,
     name = "some restaurant",
-    isOpen = true,
-    icon= "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
-    
-    } = restaurant
+    isOpenNow = true,
+    isClosedTemporarily = true,
+     icon= "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+     
+  } = restaurant;
+
+  const ratingArray=  Array.from(new Array(Math.floor(rating)));
+  // const ratingArray=  Array.from(rating);
     return<>
         <RestaurantCard>
-            <RestaurantCardCover source={{uri:photos}}/>
+            <RestaurantCardCover source={{uri: photos}}/>
             <CardSection>
     
             <Title variant="label" >{name}</Title>
             <CardInnerSection>    
             <RatingContainer>
-            {rating.map((singleRating) => {
-                  return <SvgXml xml={star} width={20} height={20} />;
-                })}
-            </RatingContainer>
+    {ratingArray.map((singleRating, index) => (
+      <Text key={index}>
+        <SvgXml xml={star} width={20} height={20} />
+        {singleRating}
+      </Text>
+    ))}
+  </RatingContainer>
     
             <RestaurantStatusContainer>
-            {isOpen && <SvgXml xml={open} width={20} height={20} />}
-            <CustomImage source={{ uri: icon }} />
+              {isClosedTemporarily && 
+
+                <Title variant="caption" style={{color:"red"}}> 
+CLOSED TEMPORARILY
+               </Title>
+              }
+            {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+       {icon &&     <CustomImage source={{ uri: icon}} />}
     
             </RestaurantStatusContainer>
                 
