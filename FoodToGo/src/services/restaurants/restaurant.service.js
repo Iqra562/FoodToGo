@@ -26,7 +26,7 @@ export const restaurantTransform = (data)=>{
       // })
       singleRestaurant.photos =  mockImages[Math.ceil(Math.random() * (mockImages.length-1))]
       
-      console.log(singleRestaurant,"camel")
+      // console.log(singleRestaurant,"camel")
       return{
          ...singleRestaurant,
    address : singleRestaurant?.vicinity,

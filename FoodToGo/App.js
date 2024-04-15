@@ -8,11 +8,12 @@ import  styled  from 'styled-components/native';
  import RestaurantScreen from './src/features/screens/Restaurant.screen'
  import theme from './src/infrastructure/theme/index';
 import { RestaurantProvider } from './src/services/restaurants/restaurant.context';
+import  LocationContextProvider  from './src/services/locations/location.context'; 
 export default function App() {
   let  [oswaldFont] = useOswald({
     Oswald_400Regular
   });
-  let [latoFont] = useOswald({
+  let [latoFont] = useLato({
     Lato_400Regular
   })
   // if(!oswaldFont || !latoFont){
@@ -33,16 +34,16 @@ margin-top: ${StatusBar.currentHeight}px;
   return (   
     
     <ThemeProvider theme={theme}>
-      <RestaurantProvider>
-
-    <CustomSafeAreaView>
-     <View>
-        {/* <Title>Hello World</Title> */}
-       <RestaurantScreen/>
-      
-  </View>
-</CustomSafeAreaView>
-      </RestaurantProvider>
+       <LocationContextProvider>
+          <RestaurantProvider>
+             <CustomSafeAreaView>
+                <View>
+                  {/* <Title>Hello World</Title> */}
+                  <RestaurantScreen/>
+                 </View>
+             </CustomSafeAreaView>
+          </RestaurantProvider>
+       </LocationContextProvider>
      </ThemeProvider>
   );
 }
