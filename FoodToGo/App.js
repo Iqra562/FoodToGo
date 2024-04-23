@@ -9,16 +9,40 @@ import  styled  from 'styled-components/native';
  import theme from './src/infrastructure/theme/index';
 import { RestaurantProvider } from './src/services/restaurants/restaurant.context';
 import  LocationContextProvider  from './src/services/locations/location.context'; 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Ionicons } from "@expo/vector-icons";
+const Tab = createBottomTabNavigator();
+
+const TAB_ICONS = {
+  Restaurants: "md-restaurant",
+  Map: "md-map",
+  Settings: "md-settings",
+};
+
+const createScreenOptions = (parameter) => {
+  const { route } = parameter;
+  const iconName = TAB_ICONS[route.name];
+
+  return {
+    tabBarIcon: (tabBarParam) => {
+      const { size, color } = tabBarParam;
+      return <Ionicons name={iconName} size={size} color={color} />;
+    },
+
+    headerShown: false,
+  };
+};
+
+
 export default function App() {
-  let  [oswaldFont] = useOswald({
-    Oswald_400Regular
-  });
-  let [latoFont] = useLato({
-    Lato_400Regular
-  })
-  // if(!oswaldFont || !latoFont){
-  //   return null;
-  // }
+  // let  [oswaldFont] = useOswald({
+  //   Oswald_400Regular
+  // });
+  // let [latoFont] = useLato({
+  //   Lato_400Regular
+  // })
+
   const Title = styled(Text)`
     font-size: 100px;
     fontFamily: Oswald_400Regular;
@@ -30,20 +54,48 @@ const CustomSafeAreaView= styled(SafeAreaView)`
 flex:1;
 margin-top: ${StatusBar.currentHeight}px;
 `
+
+function SettingsScreen(){
+  return(
+    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+      <Text>Setting</Text>
+    </View>
+  )
+}
+function MapsScreen(){
+  return(
+    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+      <Text>Map</Text>
+    </View>
+  )
+}
+
    
   return (   
     
     <ThemeProvider theme={theme}>
-       <LocationContextProvider>
-          <RestaurantProvider>
-             <CustomSafeAreaView>
-                <View>
-                  {/* <Title>Hello World</Title> */}
-                  <RestaurantScreen/>
-                 </View>
-             </CustomSafeAreaView>
-          </RestaurantProvider>
-       </LocationContextProvider>
+      <LocationContextProvider>
+  <RestaurantProvider>
+     <CustomSafeAreaView>
+        {/* <View> */}
+      <NavigationContainer>
+      <Tab.Navigator
+      screenOptions={createScreenOptions}
+      tabBarOptions={{
+        activeTintColor: "tomato",
+        inactiveTintColor: "gray",
+      }}
+    > 
+      <Tab.Screen name="Restaurants" component={RestaurantScreen} />
+      <Tab.Screen name="Map" component={MapsScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
+    {/* {AllRestaurantPart} */}
+      </NavigationContainer>
+      {/* </View> */}
+     </CustomSafeAreaView>
+  </RestaurantProvider>
+</LocationContextProvider>
      </ThemeProvider>
   );
 }
